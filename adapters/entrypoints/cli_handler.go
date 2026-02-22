@@ -23,10 +23,10 @@ const (
 )
 
 type CLIHandler struct {
-	validator                   orchestrators.IServiceContractValidator
-	rules_provider              ports.IServiceContractRulesProvider
-	rule_exceptions_provider    ports.IServiceContractRuleExceptionsProvider
-	logger                      ports.ILoggerProvider
+	validator                orchestrators.IServiceContractValidator
+	rules_provider           ports.IServiceContractRulesProvider
+	rule_exceptions_provider ports.IServiceContractRuleExceptionsProvider
+	logger                   ports.ILoggerProvider
 }
 
 type CLIRunResult struct {
@@ -74,11 +74,11 @@ func (h *CLIHandler) Run(args []string) CLIRunResult {
 	h.logger.LogInfo(fmt.Sprintf("Loaded service contract for service: %s", service_contract.GetServiceName()))
 
 	validation_command := dtos.ValidateServiceContractCommand{
-		Mode:                              parsed_args.ValidatorMode,
-		ServiceContractRulesProvider:      h.rules_provider,
+		Mode:                                  parsed_args.ValidatorMode,
+		ServiceContractRulesProvider:          h.rules_provider,
 		ServiceContractRuleExceptionsProvider: h.rule_exceptions_provider,
-		ServiceContract:                   service_contract,
-		Logger:                            h.logger,
+		ServiceContract:                       service_contract,
+		Logger:                                h.logger,
 	}
 
 	validation_result, validation_error := h.validator.Validate(validation_command)
@@ -147,9 +147,11 @@ func (h *CLIHandler) formatValidationOutput(
 		output_builder.WriteString("\n")
 	}
 
-	for _, broken_rule := range result.BrokenRules {
+	for index, broken_rule := range result.BrokenRules {
+		if index > 0 {
+			output_builder.WriteString("\n\n")
+		}
 		output_builder.WriteString(h.formatFailureOutput(broken_rule.Rule, broken_rule.Error, service_name, environment))
-		output_builder.WriteString("\n")
 	}
 
 	has_unexcepted_failures := len(result.BrokenRules) > 0
@@ -168,16 +170,22 @@ func (h *CLIHandler) formatFailureOutput(
 ) string {
 	failure, is_detailed := validation_error.(*entities.RuleValidationFailure)
 	if is_detailed {
-		return fmt.Sprintf(`%s: %s
-  Service: %s (%s)
-  Found: %s
-  Need: %s
-  Examples: %s
-  Fix: %s`,
+		return fmt.Sprintf(
+			"%s: %s\n"+
+			"Service: %s (%s)\n"+
+			"Issue: %s\n"+
+			"\n"+
+			"Found: %s\n"+
+			"Need: %s\n"+
+			"\n"+
+			"Examples: %s\n"+
+			"\n"+
+			"Fix: %s\n",
 			OUTPUT_PREFIX_FAIL,
 			rule.GetRuleName(),
 			service_name,
 			environment,
+			failure.GetIssue(),
 			failure.GetFound(),
 			failure.GetNeed(),
 			failure.GetExamples(),
@@ -185,9 +193,10 @@ func (h *CLIHandler) formatFailureOutput(
 		)
 	}
 
-	return fmt.Sprintf(`%s: %s
-  Service: %s (%s)
-  Issue: %s`,
+	return fmt.Sprintf(
+		"%s: %s\n"+
+		"Service: %s (%s)\n"+
+		"Issue: %s\n",
 		OUTPUT_PREFIX_FAIL,
 		rule.GetRuleName(),
 		service_name,
@@ -201,11 +210,12 @@ func (h *CLIHandler) formatExceptionOutput(
 	service_name string,
 	environment string,
 ) string {
-	return fmt.Sprintf(`[%s]: %s
-  Service: %s (%s)
-  Reason: %s
-  Expires: %s
-  Approved by: %s`,
+	return fmt.Sprintf(
+		"[%s]: %s\n"+
+		"Service: %s (%s)\n"+
+		"Reason: %s\n"+
+		"Expires: %s\n"+
+		"Approved by: %s\n",
 		OUTPUT_PREFIX_EXCEPTION,
 		exception.GetRule(),
 		service_name,

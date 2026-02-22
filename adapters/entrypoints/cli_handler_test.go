@@ -11,8 +11,6 @@ import (
 	"github.com/nkasozi/code-for-africa-service-contract-validator/core/interfaces/ports"
 )
 
-
-
 func TestRun_NoFileArgument_ReturnsUsageErrorWithExamples(t *testing.T) {
 	handler := createCLITestHandler(t)
 	result := handler.Run([]string{})
@@ -109,7 +107,7 @@ func TestRun_WarnModeWithBrokenRules_ReturnsSuccessExitCode(t *testing.T) {
 		result: dtos.ValidateServiceContractResult{
 			Mode: entities.WARN,
 			BrokenRules: []dtos.RuleValidationError{
-				{Rule: mock_rule, Error: entities.NewRuleValidationFailure("test_rule", "found", "need", "examples", "fix")},
+				{Rule: mock_rule, Error: entities.NewRuleValidationFailure("test_rule", "test issue", "found", "need", "examples", "fix")},
 			},
 			Exceptions: []ports.IServiceContractRuleException{},
 		},
@@ -133,7 +131,7 @@ func TestRun_EnforceModeWithBrokenRules_ReturnsFailedExitCode(t *testing.T) {
 		result: dtos.ValidateServiceContractResult{
 			Mode: entities.ENFORCE,
 			BrokenRules: []dtos.RuleValidationError{
-				{Rule: mock_rule, Error: entities.NewRuleValidationFailure("test_rule", "found", "need", "examples", "fix")},
+				{Rule: mock_rule, Error: entities.NewRuleValidationFailure("test_rule", "test issue", "found", "need", "examples", "fix")},
 			},
 			Exceptions: []ports.IServiceContractRuleException{},
 		},
@@ -172,7 +170,7 @@ func TestRun_FailureOutput_IncludesActionableDetails(t *testing.T) {
 		result: dtos.ValidateServiceContractResult{
 			Mode: entities.WARN,
 			BrokenRules: []dtos.RuleValidationError{
-				{Rule: mock_rule, Error: entities.NewRuleValidationFailure("test_rule", "what was found", "what is needed", "example values", "how to fix it")},
+				{Rule: mock_rule, Error: entities.NewRuleValidationFailure("test_rule", "the issue description", "what was found", "what is needed", "example values", "how to fix it")},
 			},
 			Exceptions: []ports.IServiceContractRuleException{},
 		},
@@ -181,6 +179,9 @@ func TestRun_FailureOutput_IncludesActionableDetails(t *testing.T) {
 	temp_file := createCLITempServiceFile(t)
 	result := handler.Run([]string{"--mode=warn", temp_file})
 
+	if !strings.Contains(result.Output, "Issue:") {
+		t.Error("Expected output to include 'Issue:' section")
+	}
 	if !strings.Contains(result.Output, "Found:") {
 		t.Error("Expected output to include 'Found:' section")
 	}
@@ -194,8 +195,6 @@ func TestRun_FailureOutput_IncludesActionableDetails(t *testing.T) {
 		t.Error("Expected output to include 'Fix:' section")
 	}
 }
-
-
 
 type MockValidator struct {
 	result dtos.ValidateServiceContractResult
