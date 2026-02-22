@@ -1,0 +1,23 @@
+name: Validate Service Contract
+
+on: [pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+
+      - name: Build validator
+        run: go build -o validate .
+
+      - name: Run tests
+        run: go test ./... -v
+
+      - name: Validate service contract (warn mode)
+        run: ./validate --mode=warn examples/valid-prod.yaml
