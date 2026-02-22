@@ -34,6 +34,7 @@ func (r *HighSensitivityRequiresDataGovernance) IsRuleSatisfied(service_contract
 		missing_fields_string := strings.Join(missing_fields, ", ")
 		return entities.NewRuleValidationFailure(
 			RULE_NAME_HIGH_SENSITIVITY_REQUIRES_GOVERNANCE,
+			"Missing data governance fields for high sensitivity service",
 			"data_sensitivity: high, missing: "+missing_fields_string,
 			"High sensitivity services require retention_days and data_owner fields",
 			"retention_days: 90, data_owner: compliance-team",

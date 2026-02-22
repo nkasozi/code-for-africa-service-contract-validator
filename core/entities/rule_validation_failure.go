@@ -1,15 +1,17 @@
 package entities
 
 type RuleValidationFailure struct {
-	RuleName    string
-	Found       string
-	Need        string
-	Examples    string
+	RuleName      string
+	Issue         string
+	Found         string
+	Need          string
+	Examples      string
 	FixSuggestion string
 }
 
 func NewRuleValidationFailure(
 	rule_name string,
+	issue string,
 	found string,
 	need string,
 	examples string,
@@ -17,6 +19,7 @@ func NewRuleValidationFailure(
 ) *RuleValidationFailure {
 	return &RuleValidationFailure{
 		RuleName:      rule_name,
+		Issue:         issue,
 		Found:         found,
 		Need:          need,
 		Examples:      examples,
@@ -25,7 +28,11 @@ func NewRuleValidationFailure(
 }
 
 func (e *RuleValidationFailure) Error() string {
-	return e.RuleName + ": validation failed"
+	return e.RuleName + ": " + e.Issue
+}
+
+func (e *RuleValidationFailure) GetIssue() string {
+	return e.Issue
 }
 
 func (e *RuleValidationFailure) GetFound() string {

@@ -27,6 +27,7 @@ func (r *EnvMustBeValid) IsRuleSatisfied(service_contract ports.IUnvalidatedServ
 		allowed_options := entities.GetAllowedEnvironmentStrings()
 		return entities.NewRuleValidationFailure(
 			RULE_NAME_VALID_ENV,
+			"Invalid environment value",
 			"env: "+raw_environment,
 			"env must be one of: "+strings.Join(allowed_options, ", "),
 			"env: dev, env: staging, env: prod",

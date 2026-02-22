@@ -59,6 +59,7 @@ func (r *ProdEnvMustHaveSymptomBasedAlert) IsRuleSatisfied(service_contract port
 
 	return entities.NewRuleValidationFailure(
 		RULE_NAME_PROD_SYMPTOM_ALERT,
+		"No symptom-based alerts found",
 		"alerts: "+found_alerts,
 		"Production services require at least one symptom-based alert",
 		"high_error_rate, p99_latency_breach, health_check_failed",

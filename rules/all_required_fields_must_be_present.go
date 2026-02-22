@@ -49,6 +49,7 @@ func (r *AllRequiredFieldsMustBePresent) IsRuleSatisfied(service_contract ports.
 		found_description := buildFoundDescription(missing_fields)
 		return entities.NewRuleValidationFailure(
 			RULE_NAME_REQUIRED_FIELDS,
+			"Required fields are missing or empty",
 			found_description,
 			"All required fields must be present and non-empty",
 			"schema_version: '1', service_name: my-service, owner: team:platform",

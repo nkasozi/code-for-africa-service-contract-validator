@@ -2,7 +2,6 @@ package rules
 
 import "testing"
 
-
 func TestAllRequiredFieldsMustBePresent_GetRuleName(t *testing.T) {
 	rule := &AllRequiredFieldsMustBePresent{}
 	expected := "all_required_fields_must_be_present"
@@ -36,7 +35,6 @@ func TestAllRequiredFieldsMustBePresent_MissingAlerts(t *testing.T) {
 		t.Error("Expected error when alerts missing")
 	}
 }
-
 
 //Mocks
 
