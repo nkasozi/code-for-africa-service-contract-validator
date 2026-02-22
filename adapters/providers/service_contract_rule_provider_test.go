@@ -7,7 +7,6 @@ import (
 	"github.com/nkasozi/code-for-africa-service-contract-validator/core/interfaces/ports"
 )
 
-
 func TestLoadServiceContractRules_ReturnsInjectedRules(t *testing.T) {
 	rules := []ports.IServiceContractRule{
 		&MockTestRule{name: "rule1"},
@@ -136,8 +135,7 @@ func TestLoadServiceContractRules_SupportsRulesWithDifferentBehaviors(t *testing
 	}
 }
 
-
-//Mocks
+// Mocks
 type MockTestRule struct {
 	name string
 }

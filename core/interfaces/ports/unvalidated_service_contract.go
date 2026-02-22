@@ -1,7 +1,6 @@
 package ports
 
-
-type IUnvalidatedServiceContract interface{
+type IUnvalidatedServiceContract interface {
 	GetSchemaVersion() string
 	GetServiceName() string
 	GetOwner() string

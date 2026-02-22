@@ -1,6 +1,5 @@
 package ports
 
-
-type IServiceContractRulesProvider interface{
+type IServiceContractRulesProvider interface {
 	LoadServiceContractRules() ([]IServiceContractRule, error)
 }

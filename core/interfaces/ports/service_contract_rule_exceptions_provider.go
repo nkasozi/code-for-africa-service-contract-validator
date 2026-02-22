@@ -1,5 +1,5 @@
 package ports
 
-type IServiceContractRuleExceptionsProvider interface{
+type IServiceContractRuleExceptionsProvider interface {
 	LoadServiceRuleExceptions() ([]IServiceContractRuleException, error)
 }

@@ -6,9 +6,9 @@ import (
 )
 
 const (
-	SENSITIVITY_LOW     = "low"
-	SENSITIVITY_MEDIUM  = "medium"
-	SENSITIVITY_HIGH    = "high"
+	SENSITIVITY_LOW    = "low"
+	SENSITIVITY_MEDIUM = "medium"
+	SENSITIVITY_HIGH   = "high"
 )
 
 type DataSensitivity string

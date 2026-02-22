@@ -1,6 +1,6 @@
 package ports
 
-type IServiceContractRule interface{
+type IServiceContractRule interface {
 	IsRuleSatisfied(serviceContract IUnvalidatedServiceContract) error
 	GetRuleName() string
 }

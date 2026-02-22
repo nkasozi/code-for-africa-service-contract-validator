@@ -11,7 +11,7 @@ type RuleValidationError struct {
 }
 
 type ValidateServiceContractResult struct {
-	Mode             entities.ServiceValidatorMode
-	BrokenRules      []RuleValidationError
-	Exceptions       []ports.IServiceContractRuleException
+	Mode        entities.ServiceValidatorMode
+	BrokenRules []RuleValidationError
+	Exceptions  []ports.IServiceContractRuleException
 }

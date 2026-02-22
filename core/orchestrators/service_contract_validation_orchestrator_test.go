@@ -9,8 +9,6 @@ import (
 	"github.com/nkasozi/code-for-africa-service-contract-validator/core/interfaces/ports"
 )
 
-
-
 func TestValidate_AllRulesPass_ReturnsNoViolations(t *testing.T) {
 	orchestrator := ServiceContractValidationOrchestrator{}
 	logger := &MockLogger{}
@@ -416,11 +414,7 @@ func TestValidate_PreservesValidatorMode(t *testing.T) {
 	}
 }
 
-
-
-
-
-//Mocks
+// Mocks
 type MockRule struct {
 	name         string
 	is_satisfied bool
