@@ -1,0 +1,10 @@
+schema_version: "1"
+service_name: code-for-africa-validator
+owner: team-platform
+env: prod
+data_sensitivity: low
+cost_center: engineering
+alerts:
+  - service_error_rate_high
+  - p99_latency_breach
+  - health_check_failed
