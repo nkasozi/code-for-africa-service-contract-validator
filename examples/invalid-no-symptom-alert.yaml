@@ -1,0 +1,9 @@
+schema_version: "1"
+service_name: legacy-api
+owner: team-legacy
+env: prod
+data_sensitivity: low
+cost_center: engineering
+alerts:
+  - cpu_high
+  - disk_full

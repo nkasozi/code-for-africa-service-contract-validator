@@ -1,0 +1,5 @@
+- rule: prod_env_must_have_symptom_based_alert
+  service: legacy-api
+  reason: Migrating to new monitoring stack
+  expires: "2026-06-01"
+  approved_by: platform-team

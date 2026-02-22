@@ -1,0 +1,10 @@
+schema_version: "1"
+service_name: api-gateway
+owner: team-platform
+env: prod
+data_sensitivity: low
+cost_center: engineering
+alerts:
+  - 5xx_rate_high
+  - p99_latency_breach
+  - health-check-failure

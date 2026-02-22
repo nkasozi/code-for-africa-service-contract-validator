@@ -1,0 +1,8 @@
+schema_version: "1"
+service_name: user-service
+owner: team-backend
+env: dev
+data_sensitivity: medium
+cost_center: development
+alerts:
+  - cpu_high
